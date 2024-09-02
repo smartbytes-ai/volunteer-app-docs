@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        h2 { color: #555; }
+        p { color: #666; }
+        code { background-color: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .endpoint { margin-bottom: 40px; }
+        .features { margin-bottom: 40px; }
+    </style>
+</head>
+<body>
+    <h1>API Documentation</h1>
+
+    <div class="features">
+        <h2>Features</h2>
+        <ul>
+            <li>People can create organizations</li>
+            <li>Each organization will be given a join code</li>
+            <li>Students use the join code to join a specific organization</li>
+            <li>The owner of the organization will be able to add hours to a specific student</li>
+            <li>Hours are displayed for each organization (everyone's hours are public)</li>
+            <li>Hours are also displayed on a student's profile with a breakdown of where they got their hours from</li>
+        </ul>
+        <p><strong>IMPORTANT:</strong> Once a user logs in, store the token since most of the API requests require the token for authentication. Once the token expires, force the user to login again. </p>
+      
+    </div>
+  <div class="timeline">
+      <h2>User Interaction Timeline</h2>
+      <ol>
+          <li>User is prompted to Sign up or Login</li>
+          <li>Store the login token</li>
+          <li>Show the homepage where it will show the amount of hours the user has and the breakdown of the origin of the hours</li>
+          <li>"+" button on the top to allow user to join a new organization</li>
+          <li>Code given by the administrator is entered by the student. Once the user joins, they can see the owner and all the students with their respective hours</li>
+          <li>Owner UI will look slightly different as they will be able to add hours to each student</li>
+          <li>When hours are added, the profile hours and the hours on the organization are updated</li>
+      </ol>
+  </div>
+    <div class="endpoint">
+        <h2>GET /</h2>
+        <p>Returns a simple greeting message.</p>
+        <p><strong>Response:</strong></p>
+        <pre>"Hello, World!"</pre>
+    </div>
+
+    <div class="endpoint">
+        <h2>POST /api/login</h2>
+        <p>Logs in a user and returns a JWT token.</p>
+        <p><strong>Input:</strong> JSON object with the following fields:</p>
+        <pre>{
+    "email": "string",
+    "password": "string"
+}</pre>
+        <p><strong>Response:</strong> JSON object with the following fields:</p>
+        <pre>{
+    "token": "string",
+    "expires": "string"
+}</pre>
+    </div>
+
+    <div class="endpoint">
+        <h2>POST /api/signup</h2>
+        <p>Signs up a new user.</p>
+        <p><strong>Input:</strong> JSON object with the following fields:</p>
+        <pre>{
+    "email": "string",
+    "password": "string",
+    "name": "string"
+}</pre>
+        <p><strong>Response:</strong> JSON object with a message indicating success or failure.</p>
+    </div>
+
+    <div class="endpoint">
+        <h2>POST /api/createOrganization</h2>
+        <p>Creates a new organization.</p>
+        <p><strong>Input:</strong> JSON object with the following fields:</p>
+        <pre>{
+    "name": "string",
+    "token": "string",
+    "location": "string",
+    "phone": "string"
+}</pre>
+        <p><strong>Response:</strong> JSON object with a message indicating success or failure.</p>
+    </div>
+
+    <div class="endpoint">
+        <h2>POST /api/joinOrganization</h2>
+        <p>Joins an existing organization using a code.</p>
+        <p><strong>Input:</strong> JSON object with the following fields:</p>
+        <pre>{
+    "code": "string",
+    "token": "string"
+}</pre>
+        <p><strong>Response:</strong> JSON object with a message indicating success or failure.</p>
+    </div>
+
+    <div class="endpoint">
+        <h2>POST /api/addHours</h2>
+        <p>Adds volunteer hours for a user in an organization.</p>
+        <p><strong>Input:</strong> JSON object with the following fields:</p>
+        <pre>{
+    "token": "string",
+    "hours": "number",
+    "user_id": "string",
+    "org_id": "string"
+}</pre>
+        <p><strong>Response:</strong> JSON object with a message indicating success or failure.</p>
+    </div>
+
+    <div class="endpoint">
+        <h2>GET /api/getUserProfile</h2>
+        <p>Gets the profile of a user by their user ID.</p>
+        <p><strong>Input:</strong> JSON object with the following fields:</p>
+        <pre>{
+    "user_id": "string"
+}</pre>
+        <p><strong>Response:</strong> JSON object containing user profile data (excluding email and password).</p>
+    </div>
+
+    <div class="endpoint">
+        <h2>GET /api/getOrganizationData</h2>
+        <p>Gets the data of an organization by its organization ID.</p>
+        <p><strong>Input:</strong> JSON object with the following fields:</p>
+        <pre>{
+    "org_id": "string"
+}</pre>
+        <p><strong>Response:</strong> JSON object containing organization data.</p>
+    </div>
+
+</body>
+</html>
